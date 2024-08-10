@@ -5,4 +5,3 @@
 [node name="Scene" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-speed = 400

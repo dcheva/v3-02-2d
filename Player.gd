@@ -1,29 +1,53 @@
 extends Area2D
 
-export var speed = 400 # How fast the player will move (pixels/sec).
-var screen_size # Size of the game window.
+export var speed = 1000 # How fast the player will move (pixels/sec).
+export var d_spd = 40 # Delta speed
+
+
+var screen_size # Size of the game window
+var velocity = Vector2.ZERO # The player's movement vector
+var velocity_to = Vector2.ZERO # The player's movement half-vector
+var animate = "up" # Movement direction
 
 func _ready():
 	screen_size = get_viewport_rect().size
 
 func _process(delta):
-	var velocity = Vector2.ZERO # The player's movement vector.
+	
+	if Input.is_action_just_pressed("move_right"):
+		$AnimatedSprite.flip_h = false
+		animate = "right"
 	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
+		velocity.x = min(velocity.x + speed/d_spd, speed)
+		
+	if Input.is_action_just_pressed("move_left"):
+		$AnimatedSprite.flip_h = true
+		animate = "right"
 	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
+		velocity.x = max(velocity.x - speed/d_spd, -speed)
+		
+	if Input.is_action_just_pressed("move_down"):
+		$AnimatedSprite.flip_v = true
+		animate = "up"
 	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
+		velocity.y = min(velocity.y + speed/d_spd, speed)
+		
+	if Input.is_action_just_pressed("move_up"):
+		$AnimatedSprite.flip_v = false
+		animate = "up"
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
-
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
+		velocity.y = max(velocity.y - speed/d_spd, -speed)
+		
+	velocity_to = Vector2(int(velocity.x/d_spd),int(velocity.y/d_spd))
+	velocity = lerp(velocity, velocity_to, delta*4)
+		
+	if int(velocity.x/d_spd) != 0 or int(velocity.y/d_spd) != 0:
+		$AnimatedSprite.animation = animate
 		$AnimatedSprite.play()
 	else:
 		$AnimatedSprite.stop()
 	
 	position += velocity * delta
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
+	position.x = clamp(position.x, 30, screen_size.x - 30)
+	position.y = clamp(position.y, 35, screen_size.y - 35)
 	
