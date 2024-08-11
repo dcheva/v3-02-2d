@@ -1,11 +1,9 @@
 extends Area2D
 
-export var speed = 1000 # How fast the player will move (pixels/sec).
-export var d_spd = 40 # Delta speed
+export var speed = 500 # How fast the player will move (pixels/sec).
 
 var screen_size # Size of the game window
 var velocity = Vector2.ZERO # The player's movement vector
-var velocity_to = Vector2.ZERO # The player's movement target vector
 var animate = "up" # Movement direction
 
 signal hit
@@ -15,6 +13,9 @@ func _ready():
 	hide()
 
 func _process(delta):
+	
+	# The player's movement target vector
+	var velocity_to = Vector2.ZERO
 	
 	# (Re-) Enter Screen
 	if Input.is_action_just_pressed("enter"):
@@ -26,35 +27,34 @@ func _process(delta):
 		# Project settings - Strech 2d Ignore
 		OS.window_fullscreen = !OS.window_fullscreen
 		
-	
+	# LERP2 - another LERP physics	
 	if Input.is_action_just_pressed("move_right"):
 		$AnimatedSprite.flip_h = false
 		animate = "right"
 	if Input.is_action_pressed("move_right"):
-		velocity.x = min(velocity.x + speed/d_spd, speed)
+		velocity_to.x = speed
 		
 	if Input.is_action_just_pressed("move_left"):
 		$AnimatedSprite.flip_h = true
 		animate = "right"
 	if Input.is_action_pressed("move_left"):
-		velocity.x = max(velocity.x - speed/d_spd, -speed)
+		velocity_to.x = -speed
 		
 	if Input.is_action_just_pressed("move_down"):
 		$AnimatedSprite.flip_v = true
 		animate = "up"
 	if Input.is_action_pressed("move_down"):
-		velocity.y = min(velocity.y + speed/d_spd, speed)
+		velocity_to.y = speed
 		
 	if Input.is_action_just_pressed("move_up"):
 		$AnimatedSprite.flip_v = false
 		animate = "up"
 	if Input.is_action_pressed("move_up"):
-		velocity.y = max(velocity.y - speed/d_spd, -speed)
+		velocity_to.y = -speed
 		
-	velocity_to = Vector2(int(velocity.x/d_spd),int(velocity.y/d_spd))
 	velocity = lerp(velocity, velocity_to, delta*4)
 		
-	if int(velocity.x/d_spd) != 0 or int(velocity.y/d_spd) != 0:
+	if int(velocity.x * delta) != 0 or int(velocity.y/delta * delta) != 0:
 		$AnimatedSprite.animation = animate
 		$AnimatedSprite.play()
 	else:
