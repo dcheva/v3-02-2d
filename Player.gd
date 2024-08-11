@@ -5,7 +5,7 @@ export var d_spd = 40 # Delta speed
 
 var screen_size # Size of the game window
 var velocity = Vector2.ZERO # The player's movement vector
-var velocity_to = Vector2.ZERO # The player's movement half-vector
+var velocity_to = Vector2.ZERO # The player's movement target vector
 var animate = "up" # Movement direction
 
 signal hit
@@ -23,10 +23,9 @@ func _process(delta):
 		start(get_viewport_rect().size / 2)
 	
 	if Input.is_action_just_pressed("full_screen"):
-		OS.window_fullscreen = !OS.window_fullscreen
 		# Project settings - Strech 2d Ignore
-		screen_size = get_viewport_rect().size
-		print (screen_size.x)
+		OS.window_fullscreen = !OS.window_fullscreen
+		
 	
 	if Input.is_action_just_pressed("move_right"):
 		$AnimatedSprite.flip_h = false
