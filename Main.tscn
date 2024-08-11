@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="Main" type="Node2D"]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="StartPosition" type="Position2D" parent="."]
