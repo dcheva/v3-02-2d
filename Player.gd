@@ -1,12 +1,13 @@
 extends Area2D
 
 export var speed = 500 # How fast the player will move (pixels/sec).
-
 var screen_size # Size of the game window
+
 var velocity = Vector2.ZERO # The player's movement vector
 var animate = "up" # Movement direction
 
 signal hit
+signal restart
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -14,20 +15,19 @@ func _ready():
 
 func _process(delta):
 	
+	# Hard restart
+	if Input.is_action_just_pressed("enter"):
+		emit_signal("restart")
+	
+	# Fullscreen
+	# Project settings - Strech 2d Ignore
+	if Input.is_action_just_pressed("full_screen"):
+		OS.window_fullscreen = !OS.window_fullscreen
+	
 	# The player's movement target vector
 	var velocity_to = Vector2.ZERO
 	
-	# (Re-) Enter Screen
-	if Input.is_action_just_pressed("enter"):
-		velocity = Vector2.ZERO
-		velocity_to = Vector2.ZERO
-		start(get_viewport_rect().size / 2)
-	
-	if Input.is_action_just_pressed("full_screen"):
-		# Project settings - Strech 2d Ignore
-		OS.window_fullscreen = !OS.window_fullscreen
-		
-	# LERP2 - another LERP physics	
+	# LERP2 - another LERP physics
 	if Input.is_action_just_pressed("move_right"):
 		$AnimatedSprite.flip_h = false
 		animate = "right"
@@ -64,15 +64,13 @@ func _process(delta):
 	position.x = clamp(position.x, 30, screen_size.x - 30)
 	position.y = clamp(position.y, 35, screen_size.y - 35)
 
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
 
 func _on_Player_body_entered(_body):
 	hide() # Player disappears after being hit.
 	emit_signal("hit")
 	# Must be deferred as we can't change physics properties on a physics callback.
 	$CollisionShape2D.set_deferred("disabled", true) # Replace with function body.
-
-
-func start(pos):
-	position = pos
-	show()
-	$CollisionShape2D.disabled = false

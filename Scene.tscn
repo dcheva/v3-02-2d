@@ -1,35 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Mob.tscn" type="PackedScene" id=2]
-[ext_resource path="res://fonts/SegoeUI/SegoeUI-SemiBold.ttf" type="DynamicFontData" id=3]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 3 )
 
 [node name="Scene" type="Node2D"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 512, 300 )
-current = true
-
-[node name="CenterContainer" type="CenterContainer" parent="Camera2D"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 200.0
-margin_top = 150.0
-margin_right = 50.0
-margin_bottom = 50.0
-
-[node name="Label" type="Label" parent="Camera2D/CenterContainer"]
-margin_right = 184.0
-margin_bottom = 75.0
-custom_fonts/font = SubResource( 1 )
-text = "Enter to spawn
-Alt+Enter to fullscreen
-WSAD or arrows to move"
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 
