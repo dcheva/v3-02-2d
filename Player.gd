@@ -54,7 +54,7 @@ func _process(delta):
 		
 	velocity = lerp(velocity, velocity_to, delta*4)
 		
-	if int(velocity.x * delta) != 0 or int(velocity.y/delta * delta) != 0:
+	if int(velocity.x * delta) != 0 or int(velocity.y * delta) != 0:
 		$AnimatedSprite.animation = animate
 		$AnimatedSprite.play()
 	else:
