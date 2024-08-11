@@ -16,6 +16,12 @@ func _ready():
 
 func _process(delta):
 	
+	# (Re-) Enter Screen
+	if Input.is_action_just_pressed("enter"):
+		velocity = Vector2.ZERO
+		velocity_to = Vector2.ZERO
+		start(get_viewport_rect().size / 2)
+	
 	if Input.is_action_just_pressed("full_screen"):
 		OS.window_fullscreen = !OS.window_fullscreen
 		# Project settings - Strech 2d Ignore
