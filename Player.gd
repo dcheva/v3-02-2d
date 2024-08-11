@@ -8,8 +8,11 @@ var velocity = Vector2.ZERO # The player's movement vector
 var velocity_to = Vector2.ZERO # The player's movement half-vector
 var animate = "up" # Movement direction
 
+signal hit
+
 func _ready():
 	screen_size = get_viewport_rect().size
+	hide()
 
 func _process(delta):
 	
@@ -55,4 +58,16 @@ func _process(delta):
 	position += velocity * delta
 	position.x = clamp(position.x, 30, screen_size.x - 30)
 	position.y = clamp(position.y, 35, screen_size.y - 35)
-	
+
+
+func _on_Player_body_entered(_body):
+	hide() # Player disappears after being hit.
+	emit_signal("hit")
+	# Must be deferred as we can't change physics properties on a physics callback.
+	$CollisionShape2D.set_deferred("disabled", true) # Replace with function body.
+
+
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
