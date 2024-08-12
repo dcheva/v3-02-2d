@@ -7,17 +7,12 @@ var velocity = Vector2.ZERO # The player's movement vector
 var animate = "up" # Movement direction
 
 signal hit
-signal restart
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
 
 func _process(delta):
-	
-	# Hard restart
-	if Input.is_action_just_pressed("enter"):
-		emit_signal("restart")
 	
 	# Fullscreen
 	# Project settings - Strech 2d Ignore

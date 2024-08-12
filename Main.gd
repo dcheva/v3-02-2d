@@ -6,21 +6,28 @@ export(PackedScene) var mob_scene
 func _ready():
 	# Init
 	$"StartPosition".position = get_viewport_rect().size / 2
+	$"StartPosition".position.y -= 50
 	randomize()
-	new_game()
 
 func new_game():
 	score = 0
+	$MobTimer.wait_time = 1
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready")
 
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$Player.hide()
+	$HUD.show_game_over()
 
 func _on_ScoreTimer_timeout():
 	score += 1
 	$MobTimer.wait_time = lerp($MobTimer.wait_time, 0, 0.01)
+	$HUD.update_score(score)
+	# @TODO SHOW LEVEL
 	print($MobTimer.wait_time)
 	
 func _on_StartTimer_timeout():
@@ -50,4 +57,4 @@ func _on_Player_hit():
 	game_over() # Replace with function body.
 
 func _on_Player_restart():
-	new_game()
+	game_over() 
