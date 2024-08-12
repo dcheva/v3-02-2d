@@ -11,7 +11,8 @@ func _ready():
 
 func new_game():
 	score = 0
-	$MobTimer.wait_time = 1
+	$MobTimer.wait_time = 1 # reser LERP countdown
+	get_tree().call_group("mobs", "queue_free")
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$HUD.update_score(score)

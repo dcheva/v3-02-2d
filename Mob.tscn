@@ -29,7 +29,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=1]
 radius = 24.0
 
-[node name="Mob" type="RigidBody2D"]
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource( 7 )
