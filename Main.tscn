@@ -41,6 +41,7 @@ Alt+Enter to fullscreen
 WSAD or arrows to move"
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 512, 300 )
 
 [node name="MobTimer" type="Timer" parent="."]
 
