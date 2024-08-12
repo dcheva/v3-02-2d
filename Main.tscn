@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Mob.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/Space002.png" type="Texture" id=4]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://art/Lofi hip hop Volume 1) - 04 - Eepy Boy (Loop Version).ogg" type="AudioStream" id=6]
+[ext_resource path="res://art/Mecha SOUND SOURCE 39.wav" type="AudioStream" id=7]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -15,6 +17,12 @@ _data = {
 script = ExtResource( 1 )
 score = 5
 mob_scene = ExtResource( 2 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0

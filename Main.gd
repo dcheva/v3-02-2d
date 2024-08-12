@@ -6,7 +6,6 @@ export(PackedScene) var mob_scene
 func _ready():
 	# Init
 	$"StartPosition".position = get_viewport_rect().size / 2
-	$"StartPosition".position.y -= 50
 	randomize()
 
 func new_game():
@@ -17,12 +16,15 @@ func new_game():
 	$StartTimer.start()
 	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
+	$Music.play()
 
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$Player.hide()
 	$HUD.show_game_over()
+	$Music.stop()
+	$DeathSound.play()
 
 func _on_ScoreTimer_timeout():
 	score += 1
