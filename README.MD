@@ -5,3 +5,4 @@
 - Start ¶Creating the enemy
 - * Change LERP physics to real LERP
 - Start ¶The main game scene
+- Start ¶Removing old creeps
