@@ -8,3 +8,5 @@
 - Start ¶Removing old creeps 
 
 * current timer 6h +LERP experiments 2h
+
+- Start ¶Finishing up
